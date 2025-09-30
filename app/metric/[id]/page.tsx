@@ -215,14 +215,16 @@ export default function MetricDetailPage() {
         {/* Large Chart */}
         <div className="bg-white rounded-lg shadow p-6 mb-6">
           <h2 className="text-lg font-semibold mb-4">Performance Trend</h2>
-          <div className="h-64">
+          <div className="h-64 w-full overflow-hidden relative">
             {metricData.metrics.length > 0 ? (
-              <Sparklines
-                data={metricData.metrics.map(m => m.metric.value)}
-                min={stats.min * 0.95}
-                max={stats.max * 1.05}
-                margin={5}
-              >
+              <div className="absolute inset-0">
+                <Sparklines
+                  data={metricData.metrics.map(m => m.metric.value)}
+                  min={stats.min * 0.95}
+                  max={stats.max * 1.05}
+                  margin={5}
+                  style={{ width: "100%", height: "100%" }}
+                >
                 <SparklinesLine
                   color={stats.change >= 0 ? '#10B981' : '#EF4444'}
                   style={{ strokeWidth: 2, fill: "none" }}
@@ -236,6 +238,7 @@ export default function MetricDetailPage() {
                   style={{ fill: stats.change >= 0 ? '#10B981' : '#EF4444' }}
                 />
               </Sparklines>
+              </div>
             ) : (
               <div className="flex items-center justify-center h-full text-gray-400">
                 No data available for selected time range
